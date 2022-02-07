@@ -76,24 +76,36 @@ for i in range (num_of_agents):
     agents.append ([random.randint(0,99),random.randint(0,99)])
     
 if random.random() < 0.5:
-    agents[0][0] += 1
+    agents[i][0] += (agents[i][0] + 1) % 100
 else:
-    agents[0][0] -= 1
+    agents[i][0] -= (agents[i][0] - 1) % 100
 
 if random.random() < 0.5:
-    agents[0][1] += 1
+    agents[i][1] += (agents[i][0] + 1) % 100
 else:
-    agents[0][1] -= 1
+    agents[i][1] -= (agents[i][0] - 1) % 100
     
 if random.random() < 0.5:
-    agents[0][0] += 1
+    agents[i][0] += (agents[i][0] + 1) % 100
 else:
-    agents[0][0] -= 1
+    agents[i][0] -= (agents[i][0] - 1) % 100
     
 if random.random() < 0.5:
-    agents[0][1] += 1
+    agents[i][1] += (agents[i][0] + 1) % 100
 else:
-    agents[0][1] -= 1
+    agents[i][1] -= (agents[i][0] - 1) % 100
+    
+if agents[i][0] < 0:
+    agents[i][0] = 0
+
+if agents[i][1] < 0:
+    agents[i][1] = 0
+    
+if agents[i][0] > 99:
+    agents[i][0] = 99
+    
+if agents[i][1] > 99:
+    agents[i][1] = 99
 
 print(agents)
 
