@@ -63,27 +63,45 @@ print("Pythagorian distance between y0, x0 and y1, x1  =", dist)
 
 
 #Creating Agent Based Model 
+import random
+
 agents= [] # Define agents with open tuple
-agents.append ([random.randint(0,99),random.randint(0,99)])# randoms represent (y,x) 
+num_of_agents = 10
 
-NexAgent = agents + ([[random.randint(0,99),random.randint(0,99)]]) #Creating two separate tuples(Cordinate Systs)
+#Creating Agent Based Model 
+
 print()
-l = len(NexAgent)
-
-for i in range(l -1):
     
-    print(str(NexAgent[i] )+ ",")#Printing on separate lines
-print(str(NexAgent[l -1] ))
+for i in range (num_of_agents):
+    agents.append ([random.randint(0,99),random.randint(0,99)])
+    
+if random.random() < 0.5:
+    agents[0][0] += 1
+else:
+    agents[0][0] -= 1
 
-import operator
-print (max(NexAgent, key=operator.itemgetter(1)))
+if random.random() < 0.5:
+    agents[0][1] += 1
+else:
+    agents[0][1] -= 1
+    
+if random.random() < 0.5:
+    agents[0][0] += 1
+else:
+    agents[0][0] -= 1
+    
+if random.random() < 0.5:
+    agents[0][1] += 1
+else:
+    agents[0][1] -= 1
+
+print(agents)
 
 import matplotlib.pyplot
 
-matplotlib.pyplot.ylim(0, 99) #Dont understand what this does in the code.
+matplotlib.pyplot.ylim(0, 99) 
 matplotlib.pyplot.xlim(0, 99)
-matplotlib.pyplot.scatter(agents[0][1],agents[0][0])
-matplotlib.pyplot.scatter(agents[1][1],agents[1][0])
-matplotlib.pyplot.show() # y and x points are meant to show, only one plots on map
-matplotlib.pyplot.scatter (agents[0][1],agents[0][0], color = 'green') # seek help on changing color toos
 
+for i in range (num_of_agents):
+    matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
+matplotlib.pyplot.show() # y and x points are meant to show, only one plots on map
