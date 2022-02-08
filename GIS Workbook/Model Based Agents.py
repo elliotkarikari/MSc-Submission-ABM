@@ -62,58 +62,41 @@ print()
 print("Pythagorian distance between y0, x0 and y1, x1  =", dist)
 
 
-#Creating Agent Based Model 
 import random
+import matplotlib.pyplot
+def distance_between(agents_row_a, agents_row_b):
+     return((agents_row_a[0] - agents_row_b[0]**2) + (agents_row_a[1]-agents_row_b[1]**2))**0.5
+
+num_of_iterations = 100
+num_of_agents = 100
 
 agents= [] # Define agents with open tuple
-num_of_agents = 10
 
-#Creating Agent Based Model 
 
-print()
-    
+#Creating Agent Based Model  
 for i in range (num_of_agents):
     agents.append ([random.randint(0,99),random.randint(0,99)])
-    
-if random.random() < 0.5:
-    agents[i][0] += (agents[i][0] + 1) % 100
-else:
-    agents[i][0] -= (agents[i][0] - 1) % 100
-
-if random.random() < 0.5:
-    agents[i][1] += (agents[i][0] + 1) % 100
-else:
-    agents[i][1] -= (agents[i][0] - 1) % 100
-    
-if random.random() < 0.5:
-    agents[i][0] += (agents[i][0] + 1) % 100
-else:
-    agents[i][0] -= (agents[i][0] - 1) % 100
-    
-if random.random() < 0.5:
-    agents[i][1] += (agents[i][0] + 1) % 100
-else:
-    agents[i][1] -= (agents[i][0] - 1) % 100
-    
-if agents[i][0] < 0:
-    agents[i][0] = 0
-
-if agents[i][1] < 0:
-    agents[i][1] = 0
-    
-if agents[i][0] > 99:
-    agents[i][0] = 99
-    
-if agents[i][1] > 99:
-    agents[i][1] = 99
-
 print(agents)
+#Move the agents
+for j in range (num_of_iterations):
+    for i in range (num_of_agents):
+    
+        if random.random() < 0.5:
+            agents[i][0] = (agents[i][0] + 1) % 100
+        else:
+            agents[i][0] = (agents[i][0] - 1) % 100
 
-import matplotlib.pyplot
+        if random.random() < 0.5:
+            agents[i][1] = (agents[i][1] + 1) % 100
+        else:
+            agents[i][1] = (agents[i][1] - 1) % 100
+print(agents)      
+
+distance = distance_between(agents[0], agents[1])
+print(distance)
 
 matplotlib.pyplot.ylim(0, 99) 
 matplotlib.pyplot.xlim(0, 99)
-
 for i in range (num_of_agents):
     matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
 matplotlib.pyplot.show() # y and x points are meant to show, only one plots on map
