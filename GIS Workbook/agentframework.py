@@ -9,12 +9,13 @@ import random
 
 #Creating Agents
 class Agent():
-    def __init__ (self, environ, spy):#Agent Constructors
+    def __init__ (self, i, environ, spy):#Agent Constructors
         self._x = random.randint(0,250)
         self._y = random.randint(0,250)
         self.env = environ
-        self.store = 0
+        self.store = 1
         self.agents = spy
+        self.i = i
         print(self._y, self._x)
         
 #function moving agents
@@ -33,12 +34,10 @@ class Agent():
 #Agent eat whats left
     def eat(self): # Eat Function ..... can you make it eat what is left/can you make agents grow?
         
-        if self.env[self._y][self._x] > 5:
+        if self.env[self._y][self._x] > 10:
             self.env[self._y][self._x] -= 10
             self.store += 10
-        else:
-            self.env[self._y][self._x] -= 10
-            self.store += 20
+       
 
 #Defining Distance between agents            
     def distance_between(self, agent): 
@@ -50,11 +49,11 @@ class Agent():
         for agent in self.agents:
             distance = self.distance_between(agent)
             
-        if distance <= neighbourhood:
-            sum = self.store + agent.store
-            average = sum /2
-            self.store = average
-            agent.store = average
+            if distance <= neighbourhood:
+                sum = self.store + agent.store
+                average = sum /2
+                self.store = average
+                agent.store = average
 
-            print("sharing " + str(distance) + " " + str(average))
+                print("sharing " + str(distance) + " " + str(average))
 
