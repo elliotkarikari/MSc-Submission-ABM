@@ -34,8 +34,8 @@ class Agent():
 #Agent eat whats left
     def eat(self): # Eat Function ..... can you make it eat what is left/can you make agents grow?
         
-        if self.env[self._y][self._x] > 10:
-            self.env[self._y][self._x] -= 10
+        if self.env[self._x][self._y] > 10:
+            self.env[self._x][self._y] -= 15
             self.store += 10
        
 
@@ -56,4 +56,8 @@ class Agent():
                 agent.store = average
 
                 print("sharing " + str(distance) + " " + str(average))
+
+    
+
+
 
