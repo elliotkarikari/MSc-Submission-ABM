@@ -4,9 +4,9 @@ Created on Mon Jan 31 16:13:15 2022
 
 @author: Elliot
 
-The aim of this exercise is to create a model which interacts with an environment using Object Oriented Programming.
+This exercise uses Object Oriented Programming to create an Agent Based Model....
 
-1. Import Libaries and files being worked with. (Line 25 - 29) 
+1. Import Libaries and files being worked with. (Line 26 - 33) 
 The agentframe and environ files are integral parts of this 
 model which allow it to run. Importing them here allows Model to read in code from these files. 
 
@@ -14,18 +14,18 @@ The matplotlib library allow us to visualise model (Line 73 - 78)
 
 2. Create Agent - See Agentframework.py 
 
-3. Function to find distance bewteen agents.(Line 42)
+3. Function to find distance bewteen agents.(Line 54-61)
 For function, distance_between, the program goes through rows x and y and calculates 
 the distance using the Pythagoras' theorem.
 
 4. Create Environment. - See environ.py 
 
-
+5. Create Agent Based Model 
 """
-
+# Imports Libraries 
 import matplotlib
-matplotlib.use('TkAgg')
-import tkinter
+matplotlib.use('TkAgg') 
+import tkinter 
 import matplotlib.pyplot
 import agentframework
 import environ
@@ -34,24 +34,25 @@ import random
  
 
 
-
 #Defining Variables 
-num_of_iterations = 500
+num_of_iterations = 300
 num_of_agents = 10
 neighbourhood = 20
 
-# Define agents with open tuple
+# Creates List of Agents. This is however empty
 agents= [] 
 
 
 fig = matplotlib.pyplot.figure(figsize=(7, 7))
 ax = fig.add_axes([0, 0, 1, 1])
 
+""" Distance between all agents. This determines if agents are close enough to interact
+Lines 53 - 54 setup the parameters for measuring distace. Lines 56 - 60 creates a loop
+which goes through all agents runing the defined parameter."""
 
 def distance_between(agents_row_a, agents_row_b):
      return(((agents_row_a._x - agents_row_b._x)**2) + ((agents_row_a._y-agents_row_b._y)**2))**0.5
 
-# Distance between all agents
 for agents_row_a in agents:
     print("Distance Between Agents" + ":")
     for agents_row_b in agents:
@@ -59,7 +60,7 @@ for agents_row_a in agents:
         print(distance, end=" ")
 
 
-#Reading environment in Model Based Agent
+#Reads in environment
 environment = environ.readEnvironment()
 
 #Environment Test - 
@@ -69,7 +70,8 @@ environment = environ.readEnvironment()
 #print(a._y, a._x)
 
 	
-#Creating Agent Based Model  
+"""Creats Agent Based Model. 
+This enables the agents to interact with its environment"""  
 for i in range (num_of_agents):  #Creats a loop going through number of agents 
     agents.append (agentframework.Agent(i,environment, agents))     #Joins agentframworkmodel to agents list while attaching the elements environment and agents. 
 
@@ -103,10 +105,11 @@ def update(frame_number):
     matplotlib.pyplot.ylim(0,250) 
     matplotlib.pyplot.xlim(0,250)
     matplotlib.pyplot.imshow(environment)
+    
     for i in range (num_of_agents):
-        matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x) # y and x points are meant to show, only one plots on map
+        matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x) # y and x points are meant to show, only one plot on map
 
-
+matplotlib.pyplot.show()
 """
 
 """
