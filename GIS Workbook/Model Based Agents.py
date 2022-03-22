@@ -4,17 +4,20 @@ Created on Mon Jan 31 16:13:15 2022
 
 @author: Elliot
 
-This exercise uses Object Oriented Programming to create an Agent Based Model....
+This exercise uses Object Oriented Programming to create an Agent Based Model 
+(A model showing sheeps interaction with an environment)
 
-1. Import Libaries and files being worked with. (Line 26 - 33) 
+Steps 
+
+1. Import Libaries and files being worked with. (Line 29 - 38) 
 The agentframe and environ files are integral parts of this 
 model which allow it to run. Importing them here allows Model to read in code from these files. 
 
-The matplotlib library allow us to visualise model (Line 73 - 78)
+The matplotlib library allow us to visualise model (Line 118 - 125)
 
 2. Create Agent - See Agentframework.py 
 
-3. Function to find distance bewteen agents.(Line 54-61)
+3. Function to find distance bewteen agents.
 For function, distance_between, the program goes through rows x and y and calculates 
 the distance using the Pythagoras' theorem.
 
@@ -24,30 +27,44 @@ the distance using the Pythagoras' theorem.
 """
 # Imports Libraries 
 import matplotlib
-matplotlib.use('TkAgg') 
+matplotlib.use('TkAgg') #TkAgg renders data to a tk Canvas
 import tkinter 
 import matplotlib.pyplot
 import agentframework
 import environ
 import matplotlib.animation
 import random
- 
+import requests
+import bs4
 
 
 #Defining Variables 
-num_of_iterations = 300
-num_of_agents = 10
-neighbourhood = 20
-
-# Creates List of Agents. This is however empty
-agents= [] 
+num_of_iterations = 300 # Number of times model runs 
+num_of_agents = 10 # Agents in model 
+neighbourhood = 20  # Neighbourhood Conversation
 
 
-fig = matplotlib.pyplot.figure(figsize=(7, 7))
-ax = fig.add_axes([0, 0, 1, 1])
+"""
+WebScrapping 
+
+Data from the site stated in the website below is drawn into this model
+This data is assigned to x and y values determining its initial starting positon. 
+"""
+
+r = requests.get('http://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html')
+content = r.text
+soup = bs4.BeautifulSoup(content, 'html.parser')
+td_ys = soup.find_all(attrs={"class" : "y"})
+td_xs = soup.find_all(attrs={"class" : "x"})
+print(td_ys)
+print(td_xs)
+
+
+agents= [] # Creates List of Agents. 
+
 
 """ Distance between all agents. This determines if agents are close enough to interact
-Lines 53 - 54 setup the parameters for measuring distace. Lines 56 - 60 creates a loop
+Lines 70 - 71 setup the parameters for measuring distace. Lines 73 - 77 creates a loop
 which goes through all agents runing the defined parameter."""
 
 def distance_between(agents_row_a, agents_row_b):
@@ -63,16 +80,25 @@ for agents_row_a in agents:
 #Reads in environment
 environment = environ.readEnvironment()
 
+
+#Define parameters of environment
+fig = matplotlib.pyplot.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1])
+
 #Environment Test - 
 #a = agentframework.Agent(environment)
 #print(a._y, a._x)
-#a.move()
-#print(a._y, a._x)
 
-	
-"""Creats Agent Based Model. 
-This enables the agents to interact with its environment"""  
+
+
+""" 
+Enables the agents to interact with its environment
+The loop goes throug the number of agents and 
+
+"""  
 for i in range (num_of_agents):  #Creats a loop going through number of agents 
+    y = int(td_ys[i].text)
+    x = int(td_xs[i].text)
     agents.append (agentframework.Agent(i,environment, agents))     #Joins agentframworkmodel to agents list while attaching the elements environment and agents. 
 
 
