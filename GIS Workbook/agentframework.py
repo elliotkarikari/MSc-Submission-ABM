@@ -10,8 +10,8 @@ import random
 #Creating Agents
 class Agent():
     def __init__ (self, i, environ, spy):#Agent Constructors
-        self._x = random.randint(0,250) #Picks a random number from 0 - 250 for variable x
-        self._y = random.randint(0,250)#Picks a random number from 0 - 250 for variable y. x and y form agents. This creates as many agents need for the model. 
+        self._x = random.randint(0,250) # Constracts x randomly. Picks a random number from 0 - 250 for variable x
+        self._y = random.randint(0,250) # Constracts y randomly. Picks a random number from 0 - 250 for variable y. This creates as many agents need for the model. 
         self.env = environ
         self.store = 1
         self.agents = spy
@@ -22,9 +22,11 @@ class Agent():
 #function moving agents
     def move(self):#Move function 
     
-        if random.random() < 0.2:
+        random_generated = random.random()
+        
+        if random_generated < 0.2:
             self._y = (self._y + 1) % 250 #This provides parameters of movement for agents. It also creates a boundary (Torus) using the modulo sign %
-        elif random.random() < 0.5:
+        elif random_generated > 0.5:
             self._y = (self._y - 1) % 250
         else:
             pass
@@ -32,7 +34,7 @@ class Agent():
 
         if random.random() < 0.2:
             self._x = (self._x + 1) % 250
-        elif random.random() < 0.5:
+        elif random.random() > 0.5:
             self._x = (self._x - 1) % 250
         else:
             pass
@@ -41,10 +43,17 @@ class Agent():
 #Agent eat whats left
     def eat(self): # Eat Function ..... can you make it eat what is left/can you make agents grow?
         
-        if self.env[self._x][self._y] > 5:
+        if self.env[self._x][self._y] > 10:
+            print (self.env[self._x][self._y])
             self.env[self._x][self._y] -= 10
             self.store += 10
+        else: 
+            self.env[self._x][self._y] -= self.env[self._x][self._y]
+            self.store += self.env[self._x][self._y]
        
+        if self.store >= 150:
+            self.env[self._x][self._y] = self.store - 150 
+             
 
 #Defining Distance between agents            
     def distance_between(self, agent): 

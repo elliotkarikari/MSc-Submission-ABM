@@ -39,7 +39,7 @@ import bs4
 
 
 #Defining Variables 
-num_of_iterations = 300 # Number of times model runs 
+num_of_iterations = 500 # Number of times model runs 
 num_of_agents = 10 # Agents in model 
 neighbourhood = 20  # Neighbourhood Conversation
 
@@ -90,19 +90,21 @@ ax = fig.add_axes([0, 0, 1, 1])
 #print(a._y, a._x)
 
 
-
 """ 
-Enables the agents to interact with its environment
-The loop goes throug the number of agents and 
+Agents are created and enabled to interact with its environment
+The loop goes through the number of agents and 
 
 """  
 for i in range (num_of_agents):  #Creats a loop going through number of agents 
     y = int(td_ys[i].text)
     x = int(td_xs[i].text)
-    agents.append (agentframework.Agent(i,environment, agents))     #Joins agentframworkmodel to agents list while attaching the elements environment and agents. 
-
-
-carry_on = True
+    
+#Creates agents on line 103 and list while attaching the elements environment and agents.
+    sheep = agentframework.Agent(i,environment, agents)
+    agents.append(sheep)  
+    
+#Creates an extra agent to act as wolf
+wolf = agentframework.Agent(num_of_agents + 1,environ, agents)
 
 """
 
@@ -111,21 +113,30 @@ carry_on = True
 """
 
 def update(frame_number):
-    
+   
     fig.clear()   
     global carry_on
+    
+
 #Agentframework Tasks                                       
     random.shuffle(agents)    # Agent order is randomized 
+    
+#Loops through list of agents and calling agent methods    
     for i in range (num_of_agents):
         #print (agents[i].i)
-        agents[i].move()
-        agents[i].eat()
-        agents[i].shared_neigbourhood(neighbourhood)
-            
+        
+        agent = agents[i]
+        agent.move()
+        agent.eat()
+        agent.shared_neigbourhood(neighbourhood)
+                  
+        
     if random.random() < 0.1:
         carry_on = False
         print("stopping condition")
-        
+    else:
+        carry_on = True
+        #print("Continuing")
 
 #Displays Agent onto Environment        
     matplotlib.pyplot.ylim(0,250) 
