@@ -7,7 +7,7 @@ Created on Thu Feb 10 15:58:58 2022
 #Import Library
 import random
 
-#Creating Agents
+#Creating Agents - Defines what agent's characteristics 
 class Agent():
     def __init__ (self, i, environ, spy):#Agent Constructors
         self._x = random.randint(0,250) # Constracts x randomly. Picks a random number from 0 - 250 for variable x
@@ -39,22 +39,30 @@ class Agent():
         else:
             pass
         
+        #print(random_generated) - Test - Generates random umber
         
+    def get_store(self):
+        return self.store
+    
 #Agent eat whats left
     def eat(self): # Eat Function ..... can you make it eat what is left/can you make agents grow?
         
-        if self.env[self._x][self._y] > 10:
-            print (self.env[self._x][self._y])
-            self.env[self._x][self._y] -= 10
-            self.store += 10
+        if self.env[self._x][self._y] > 10:                 #if x and y cordinates is greater than 10
+            #print (self.env[self._x][self._y])
+            self.env[self._x][self._y] -= 10                #take away 10
+            self.store += 10                                #store 10
         else: 
             self.env[self._x][self._y] -= self.env[self._x][self._y]
             self.store += self.env[self._x][self._y]
        
         if self.store >= 150:
-            self.env[self._x][self._y] = self.store - 150 
-             
+            print("id ="+str(self.i) +"  Store =" +str(self.store))
+            
+            self.env[self._x][self._y] = self.store - 20
+            self.store -=20
+            print("After giving:  "+str(self.store))
 
+             
 #Defining Distance between agents            
     def distance_between(self, agent): 
         return (((self._x - agent._x)**2) + ((self._y - agent._y)**2))**0.5 

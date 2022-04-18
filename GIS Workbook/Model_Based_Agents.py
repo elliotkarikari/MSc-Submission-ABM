@@ -40,7 +40,7 @@ import bs4
 
 #Defining Variables 
 num_of_iterations = 500 # Number of times model runs 
-num_of_agents = 10 # Agents in model 
+num_of_agents = 20 # Agents in model 
 neighbourhood = 20  # Neighbourhood Conversation
 
 
@@ -104,7 +104,7 @@ for i in range (num_of_agents):  #Creats a loop going through number of agents
     agents.append(sheep)  
     
 #Creates an extra agent to act as wolf
-wolf = agentframework.Agent(num_of_agents + 1,environ, agents)
+#wolf = agentframework.Agent(num_of_agents + 1,environ, agents)
 
 """
 
@@ -144,7 +144,7 @@ def update(frame_number):
     matplotlib.pyplot.imshow(environment)
     
     for i in range (num_of_agents):
-        matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x) # y and x points are meant to show, only one plot on map
+        matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x,c="white") # y and x points are meant to show, only one plot on map
 
 matplotlib.pyplot.show()
 """
