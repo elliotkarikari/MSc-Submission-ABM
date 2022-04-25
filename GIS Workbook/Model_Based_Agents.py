@@ -13,9 +13,9 @@ Steps
 The agentframe and environ files are integral parts of this 
 model which allow it to run. Importing them here allows Model to read in code from these files. 
 
-The matplotlib library allow us to visualise model (Line 118 - 125)
+The matplotlib library allow us to visualise model (Line 141 - 151)
 
-2. Create Agent - See Agentframework.py 
+2. Create Agents and Wolf- See Agentframework.py 
 
 3. Function to find distance bewteen agents.
 For function, distance_between, the program goes through rows x and y and calculates 
@@ -23,7 +23,7 @@ the distance using the Pythagoras' theorem.
 
 4. Create Environment. - See environ.py 
 
-5. Create Agent Based Model 
+5. Run Agent_Based_Model 
 """
 # Imports Libraries 
 import matplotlib
@@ -42,14 +42,15 @@ import bs4
 num_of_iterations = 500 # Number of times model runs 
 num_of_agents = 20 # Agents in model 
 neighbourhood = 20  # Neighbourhood Conversation
-num_of_wolfs = 2
+agents= [] # Creates List of Agents.
+wolves=[] # Creates List of wolves.
 
 
 """
 WebScrapping 
 
 Data from the site stated in the website below is drawn into this model
-This data is assigned to x and y values determining its initial starting positon. 
+This data is assigned to x and y values determining its initial starting positon of Agents. 
 """
 
 r = requests.get('http://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html')
@@ -59,24 +60,6 @@ td_ys = soup.find_all(attrs={"class" : "y"})
 td_xs = soup.find_all(attrs={"class" : "x"})
 print(td_ys)
 print(td_xs)
-
-
-agents= [] # Creates List of Agents.
-wolves=[] 
-
-
-""" Distance between all agents. This determines if agents are close enough to interact
-Lines 70 - 71 setup the parameters for measuring distace. Lines 73 - 77 creates a loop
-which goes through all agents runing the defined parameter."""
-
-def distance_between(agents_row_a, agents_row_b):
-     return(((agents_row_a._x - agents_row_b._x)**2) + ((agents_row_a._y-agents_row_b._y)**2))**0.5
-
-for agents_row_a in agents:
-    print("Distance Between Agents" + ":")
-    for agents_row_b in agents:
-        distance = distance_between(agents_row_a, agents_row_b)
-        print(distance, end=" ")
 
 
 #Reads in environment
@@ -92,26 +75,32 @@ ax = fig.add_axes([0, 0, 1, 1])
 #print(a._y, a._x)
 
 
+
 """ 
 Agents are created and enabled to interact with its environment
-The loop goes through the number of agents and 
+The loop goes through the number of agents, determines its starting positions of agents and creates it by drawing out attributes 
+from agentframework. It them appends it to the list forming agents
 
 """  
 for i in range (num_of_agents):  #Creats a loop going through number of agents 
     y = int(td_ys[i].text)
     x = int(td_xs[i].text)
     
-#Creates agents on line 103 and list while attaching the elements environment and agents.
+#Creates agent instance on line 89 while attaching the elements environment and agents.
     sheep = agentframework.Agent(i,environment, agents)
     agents.append(sheep)  
+        
+""" 
+Outside the loop we create a wolf which goes through the same motion of drowing out its attributes from the framework and 
+creating a wolf
+
+""" 
     
-    wolve= agentframework.Wolf(i, environ, agents)
-    wolves.append(wolve)
-#Creates an extra agent to act as wolf
-#wolf = agentframework.Agent(num_of_agents + 1,environ, agents)
+wolve= agentframework.Agent(num_of_agents, environment, agents)
+wolves.append(wolve)
+
 
 """
-
 
 
 """
@@ -125,36 +114,21 @@ def update(frame_number):
 #Agentframework Tasks                                       
     random.shuffle(agents)    # Agent order is randomized 
     
-#Loops through list of agents and calling agent methods    
+#Loops through list of agents and calls agent methods defined in agentframework. This gives agency to created agents   
     for i in range (num_of_agents):
         #print (agents[i].i)
         
         agent = agents[i]
-        agent.move()
-        agent.eat()
-        agent.shared_neigbourhood(neighbourhood)
-                  
+#This if statement is a condition which states if agents are a live, show them on screen. If they die, take them off screen.
+        if agent.living:
+            agent.move()
+            agent.eat()
+            agent.shared_neigbourhood(neighbourhood)
+#Wolves are outside loop because they are alive and doing the killing
+        wolves[0].move()
+        wolves[0].eatsheep(neighbourhood)
         
-    if random.random() < 0.1:
-        carry_on = False
-        print("stopping condition")
-    else:
-        carry_on = True
-        #print("Continuing")
-
-#Agentframework Tasks                                       
-    random.shuffle(wolves)    # Agent order is randomized 
-    
-#Loops through list of agents and calling agent methods    
-    for i in range (num_of_wolfs):
-        #print (agents[i].i)
-        
-        agent = wolves[i]
-        agent.move()
-        agent.eat()
-        agent.shared_neigbourhood(neighbourhood)
-                  
-        
+#what does this do ??????????????????????                    
     if random.random() < 0.1:
         carry_on = False
         print("stopping condition")
@@ -163,23 +137,31 @@ def update(frame_number):
         #print("Continuing")
 
 
-
-
-#Displays Agent onto Environment        
+#Displays Environment        
     matplotlib.pyplot.ylim(0,250) 
     matplotlib.pyplot.xlim(0,250)
     matplotlib.pyplot.imshow(environment)
     
+#Displays agents on Environment
     for i in range (num_of_agents):
-        matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x,c="white") # y and x points are meant to show, only one plot on map
+        if agents[i].living:
+            matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x,c="white") # y and x points (Sheep) plots on map, colour white
+        matplotlib.pyplot.scatter(wolves[0]._y,wolves[0]._x,c="brown") # y and x points plot on map (wolf), colour brown
 
 matplotlib.pyplot.show()
-"""
 
 """
+Creates Graphic User Invterface. Run function and quit function are commands which all model to be run and stopped from GUI
+tkinter.Menue creates the menu bar with model_menu.add_commands creating button to execute function defined above
+"""
+
 def run():   
     animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=50)
     canvas.draw()
+
+def quit():
+    global root
+    root.quit()
 
 '''Creates GUI'''
 
@@ -193,15 +175,11 @@ root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
 menu_bar.add_cascade(label="Model", menu=model_menu)
 model_menu.add_command(label="Run model", command=run, state="normal") 
+model_menu.add_command(label="Clear model", command=quit, state="normal")
 
 
 tkinter.mainloop()
 
 
 
-
-#Environment Test
-#a = agents[7]._y
-#b = agents[5]._x     
-#print(a,b)
  
