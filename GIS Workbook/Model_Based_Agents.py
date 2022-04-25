@@ -42,6 +42,7 @@ import bs4
 num_of_iterations = 500 # Number of times model runs 
 num_of_agents = 20 # Agents in model 
 neighbourhood = 20  # Neighbourhood Conversation
+num_of_wolfs = 2
 
 
 """
@@ -60,7 +61,8 @@ print(td_ys)
 print(td_xs)
 
 
-agents= [] # Creates List of Agents. 
+agents= [] # Creates List of Agents.
+wolves=[] 
 
 
 """ Distance between all agents. This determines if agents are close enough to interact
@@ -103,6 +105,8 @@ for i in range (num_of_agents):  #Creats a loop going through number of agents
     sheep = agentframework.Agent(i,environment, agents)
     agents.append(sheep)  
     
+    wolve= agentframework.Wolf(i, environ, agents)
+    wolves.append(wolve)
 #Creates an extra agent to act as wolf
 #wolf = agentframework.Agent(num_of_agents + 1,environ, agents)
 
@@ -137,6 +141,29 @@ def update(frame_number):
     else:
         carry_on = True
         #print("Continuing")
+
+#Agentframework Tasks                                       
+    random.shuffle(wolves)    # Agent order is randomized 
+    
+#Loops through list of agents and calling agent methods    
+    for i in range (num_of_wolfs):
+        #print (agents[i].i)
+        
+        agent = wolves[i]
+        agent.move()
+        agent.eat()
+        agent.shared_neigbourhood(neighbourhood)
+                  
+        
+    if random.random() < 0.1:
+        carry_on = False
+        print("stopping condition")
+    else:
+        carry_on = True
+        #print("Continuing")
+
+
+
 
 #Displays Agent onto Environment        
     matplotlib.pyplot.ylim(0,250) 
