@@ -4,6 +4,8 @@ This project code located in the GIS Workbook folder uses Agent Based Modelling 
 The environment created in the "environ.py" file. The "Model_Based_Agents.py" file also the agents to be read into the environment. Here we us Object-Oriented Programming
 which allows multiple instruction to be run simulaneously. 
 
+The model is run through "Model_Based_Agent.py" file. 
+
 The project contains runs a number of iterations: 500
 Contins 2 major Agents: 
 20 agents (Sheep) - They move, eat, store, share and store excess eaten into their environment.
