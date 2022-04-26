@@ -1,7 +1,7 @@
 # elliotkarikari.github.io
 # Portfolio
 This project code located in the GIS Workbook folder uses Agent Based Modelling to explore sheep behaviour in an environment. The agents are created and given its attributes in the "agentframework.py" file.
-The environment created in the "environ.py" file. The "Model_Based_Agents.py" file also the agents to be read into the environment. Here we us Object-Oriented Programming
+The environment created in the "environ.py" file. This is a raster file with pixel values. The "Model_Based_Agents.py" file also the agents to be read into the environment. Here we us Object-Oriented Programming
 which allows multiple instruction to be run simulaneously. 
 
 The model is run through "Model_Based_Agent.py" file. 
