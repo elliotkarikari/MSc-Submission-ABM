@@ -5,6 +5,11 @@ Created on Mon Feb 14 17:41:21 2022
 @author: Elliot
 """
 
+"""
+CSV containing details of raster grid is imported and read into model
+It goes through data rows and appends it to our environment list. 
+Thus creating our environment
+""" 
 
 import csv
 

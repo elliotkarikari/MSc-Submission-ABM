@@ -41,7 +41,7 @@ import bs4
 #Defining Variables 
 num_of_iterations = 500 # Number of times model runs 
 num_of_agents = 20 # Agents in model 
-neighbourhood = 20  # Neighbourhood Conversation
+neighbourhood = 5  # Neighbourhood Conversation
 agents= [] # Creates List of Agents.
 wolves=[] # Creates List of wolves.
 
@@ -58,22 +58,23 @@ content = r.text
 soup = bs4.BeautifulSoup(content, 'html.parser')
 td_ys = soup.find_all(attrs={"class" : "y"})
 td_xs = soup.find_all(attrs={"class" : "x"})
-print(td_ys)
-print(td_xs)
+
+"""Web Scrapping test"""
+#print(td_ys, td_xs) 
 
 
 #Reads in environment
 environment = environ.readEnvironment()
 
 
-#Define parameters of environment
-fig = matplotlib.pyplot.figure(figsize=(7, 7))
-ax = fig.add_axes([0, 0, 1, 1])
-
-#Environment Test - 
+"""Environment Test"""  
 #a = agentframework.Agent(environment)
 #print(a._y, a._x)
 
+
+#Define parameters of Canvas
+fig = matplotlib.pyplot.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1])
 
 
 """ 
@@ -141,12 +142,18 @@ def update(frame_number):
     matplotlib.pyplot.ylim(0,250) 
     matplotlib.pyplot.xlim(0,250)
     matplotlib.pyplot.imshow(environment)
+    matplotlib.pyplot.xlabel('Sheep are white, Wolf is brown')
+    matplotlib.pyplot.title(label="Sheep in trouble, Wolf on the loose",
+              loc="center",
+              fontstyle='italic')
+    
     
 #Displays agents on Environment
     for i in range (num_of_agents):
         if agents[i].living:
             matplotlib.pyplot.scatter(agents[i]._y,agents[i]._x,c="white") # y and x points (Sheep) plots on map, colour white
         matplotlib.pyplot.scatter(wolves[0]._y,wolves[0]._x,c="brown") # y and x points plot on map (wolf), colour brown
+
 
 matplotlib.pyplot.show()
 
@@ -167,7 +174,7 @@ def quit():
 
 root = tkinter.Tk() 
 root.wm_title("Model")
-canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root)
+canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root,)
 canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                       
 menu_bar = tkinter.Menu(root)
