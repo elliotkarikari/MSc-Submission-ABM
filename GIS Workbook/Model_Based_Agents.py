@@ -206,7 +206,7 @@ model_menu.add_command(label="Run model", command=run, state="normal")
 model_menu.add_command(label="Clear model", command=quit, state="normal")
 
 
-#tkinter.mainloop()
+tkinter.mainloop()
 
 
 
