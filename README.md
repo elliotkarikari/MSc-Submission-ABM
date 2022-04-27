@@ -13,4 +13,4 @@ Contins 2 major Agents:
 & a wolf. 
 The wolves - move (Chase sheep) and kill sheep when they are close enough. Dead sheep disapper from screen. 
 
-The model is run through a GUI with a __Run__ button and can be stopped using the __Clear__ button 
+The model is run through a GUI with a __Run Model__ button and can be stopped using the __Clear Model__ button 
