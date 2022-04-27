@@ -14,7 +14,16 @@ Thus creating our environment
 import csv
 
 #Function creating Environment
-def readEnvironment(): #Define Funciton 
+def readEnvironment(): #Define Funciton
+    """Agent Constructor.  
+    
+    Reads CSV into model 
+    
+    Parameters
+    ----------
+    None
+    ------
+    """      
     environment = []    #
     with open('in.txt', newline='') as f: #Open and read text file with raster data
         reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)

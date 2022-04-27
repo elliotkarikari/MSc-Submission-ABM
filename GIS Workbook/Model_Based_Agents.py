@@ -41,7 +41,7 @@ import bs4
 #Defining Variables 
 num_of_iterations = 500 # Number of times model runs 
 num_of_agents = 20 # Agents in model 
-neighbourhood = 5  # Neighbourhood Conversation
+neighbourhood = 10  
 agents= [] # Creates List of Agents.
 wolves=[] # Creates List of wolves.
 
@@ -60,7 +60,7 @@ td_ys = soup.find_all(attrs={"class" : "y"})
 td_xs = soup.find_all(attrs={"class" : "x"})
 
 """Web Scrapping test"""
-#print(td_ys, td_xs) 
+print(td_ys, td_xs) 
 
 
 #Reads in environment
@@ -88,7 +88,7 @@ for i in range (num_of_agents):  #Creats a loop going through number of agents
     x = int(td_xs[i].text)
     
 #Creates agent instance on line 89 while attaching the elements environment and agents.
-    sheep = agentframework.Agent(i,environment, agents)
+    sheep = agentframework.Agent(i,environment, agents, x, y)
     agents.append(sheep)  
         
 """ 
@@ -97,17 +97,22 @@ creating a wolf
 
 """ 
     
-wolve= agentframework.Agent(num_of_agents, environment, agents)
+wolve= agentframework.Agent(num_of_agents, environment, agents, x, y)
 wolves.append(wolve)
 
 
-"""
-
-
-"""
-
 def update(frame_number):
-   
+
+    """Once canvas is drawn. It updates the canvas per frame_number. 
+    
+    If the arguement frame_number isn't passed frame is not updated.
+    
+    Parameters
+    ----------
+    frame_number : int,
+        Number of times frames after which canvas is cleared and redrawn 
+    ------
+    """
     fig.clear()   
     global carry_on
     
@@ -125,14 +130,14 @@ def update(frame_number):
             agent.move()
             agent.eat()
             agent.shared_neigbourhood(neighbourhood)
-#Wolves are outside loop because they are alive and doing the killing
+#Wolves are outside the if statement because they are alive and doing the killing
         wolves[0].move()
         wolves[0].eatsheep(neighbourhood)
         
 #what does this do ??????????????????????                    
     if random.random() < 0.1:
         carry_on = False
-        print("stopping condition")
+        #print("stopping condition")
     else:
         carry_on = True
         #print("Continuing")
@@ -162,30 +167,46 @@ Creates Graphic User Invterface. Run function and quit function are commands whi
 tkinter.Menue creates the menu bar with model_menu.add_commands creating button to execute function defined above
 """
 
-def run():   
+def run(): 
+    
+    """This runs simulation.  
+    
+    Parameters
+    ----------
+    Does not take any parameters.
+    ------
+    """
     animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=50)
     canvas.draw()
 
 def quit():
+    
+    """This stops the simulation.
+    
+    Parameters
+    ----------
+   Does not take any parameters. 
+    ------
+    """
     global root
     root.quit()
 
 '''Creates GUI'''
 
-root = tkinter.Tk() 
-root.wm_title("Model")
-canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root,)
-canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+#root = tkinter.Tk() 
+#root.wm_title("Model")
+#canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root,)
+#canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                       
-menu_bar = tkinter.Menu(root)
-root.config(menu=menu_bar)
-model_menu = tkinter.Menu(menu_bar)
-menu_bar.add_cascade(label="Model", menu=model_menu)
-model_menu.add_command(label="Run model", command=run, state="normal") 
-model_menu.add_command(label="Clear model", command=quit, state="normal")
+#menu_bar = tkinter.Menu(root)
+#root.config(menu=menu_bar)
+#model_menu = tkinter.Menu(menu_bar)
+#menu_bar.add_cascade(label="Model", menu=model_menu)
+#model_menu.add_command(label="Run model", command=run, state="normal") 
+#model_menu.add_command(label="Clear model", command=quit, state="normal")
 
 
-tkinter.mainloop()
+#tkinter.mainloop()
 
 
 
