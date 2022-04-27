@@ -13,7 +13,7 @@ Steps
 The agentframe and environ files are integral parts of this 
 model which allow it to run. Importing them here allows Model to read in code from these files. 
 
-The matplotlib library allow us to visualise model (Line 141 - 151)
+The matplotlib library allow us to visualise model (Line 147 - 160)
 
 2. Create Agents and Wolf- See Agentframework.py 
 
@@ -193,17 +193,17 @@ def quit():
 
 '''Creates GUI'''
 
-#root = tkinter.Tk() 
-#root.wm_title("Model")
-#canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root,)
-#canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+root = tkinter.Tk() 
+root.wm_title("Model")
+canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root,)
+canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                       
-#menu_bar = tkinter.Menu(root)
-#root.config(menu=menu_bar)
-#model_menu = tkinter.Menu(menu_bar)
-#menu_bar.add_cascade(label="Model", menu=model_menu)
-#model_menu.add_command(label="Run model", command=run, state="normal") 
-#model_menu.add_command(label="Clear model", command=quit, state="normal")
+menu_bar = tkinter.Menu(root)
+root.config(menu=menu_bar)
+model_menu = tkinter.Menu(menu_bar)
+menu_bar.add_cascade(label="Model", menu=model_menu)
+model_menu.add_command(label="Run model", command=run, state="normal") 
+model_menu.add_command(label="Clear model", command=quit, state="normal")
 
 
 #tkinter.mainloop()

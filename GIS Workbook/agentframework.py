@@ -41,8 +41,8 @@ class Agent():
         y position scrapped from website
         ------
         """    
-        self._x = x # Constracts x randomly. Picks a random number from 0 - 250 for variable x
-        self._y = y # Constracts y randomly. Picks a random number from 0 - 250 for variable y. This creates as many agents need for the model. 
+        self._x = x # Scraps x co-ordinate from website
+        self._y = y # Scraps y co-ordinate from website. x and y determine the starting position of agents. 
         self.env = environ
         self.store = 1
         self.agents = spy
