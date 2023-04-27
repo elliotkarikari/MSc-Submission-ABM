@@ -1,4 +1,4 @@
-# elliotkarikari.github.io
+# Agent Based Modelling
 # Portfolio
 This project code located in the GIS Workbook folder uses __Agent Based Modelling__ to explore sheep behaviour in an environment. The agents are created and given its attributes in the __agentframework.py__ file. 
 
